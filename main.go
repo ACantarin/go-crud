@@ -6,8 +6,10 @@ import (
 )
 
 type Product struct {
-	Name  string
-	Price float64
+	Name        string
+	Description string
+	Price       float64
+	Quantity    int
 }
 
 /*
@@ -33,8 +35,28 @@ O parâmetro "w" representa o ResponseWriter é responsável por escrever a resp
 O parâmetro "r" representa o Request, contendo os dados da requisição
 */
 func index(w http.ResponseWriter, r *http.Request) {
+	produtos := []Product{
+		{
+			Name:        "Camiseta",
+			Description: "Cor preta",
+			Price:       29.00,
+			Quantity:    10,
+		},
+		{
+			Name:        "Notebook",
+			Description: "16gb RAM",
+			Price:       1999.00,
+			Quantity:    2,
+		},
+		{
+			Name:        "Mouse",
+			Description: "Logitech",
+			Price:       49.90,
+			Quantity:    5,
+		},
+	}
 	/*
 		Executa o template "index.html" passando o parâmetro "nil" pois o template não executa nenhuma ação
 	*/
-	templates.ExecuteTemplate(w, "index.html", nil)
+	templates.ExecuteTemplate(w, "index.html", produtos)
 }

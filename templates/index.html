@@ -27,18 +27,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{range .}}
                         <tr>
-                            <td>Camiseta</td>
-                            <td>Cor preta</td>
-                            <td>R$ 29,00</td>
-                            <td>10</td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Description}}</td>
+                            <td>{{.Price}}</td>
+                            <td>{{.Quantity}}</td>
                         </tr>
-                        <tr>
-                            <td>Notebook</td>
-                            <td>16gb RAM</td>
-                            <td>R$ 1999,00</td>
-                            <td>2</td>
-                        </tr>
+                        {{end}}
                     </tbody>
                 </table>
             </div>
