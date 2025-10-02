@@ -35,7 +35,7 @@
                             <td>{{.Price}}</td>
                             <td>{{.Quantity}}</td>
                             <td>
-                                <a href="/delete?id={{.Id}}" class="btn btn-danger">Excluir</a>
+                                <button onclick="onDelete('{{.Id}}')" class="btn btn-danger">Excluir</button>
                             </td>
                         </tr>
                         {{end}}
@@ -48,4 +48,15 @@
         </div>
     </div>
 </body>
+<script>
+    function onDelete(id) {
+        let response = confirm("Tem certeza que deseja excluir esse registro?");
+
+        if (response == false) {
+            return;
+        }
+
+        window.location.href = "/delete?id=" + id;
+    }
+</script>
 </html>
