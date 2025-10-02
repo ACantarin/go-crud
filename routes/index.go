@@ -7,4 +7,6 @@ import (
 
 func Load() {
 	http.HandleFunc("/", controllers.Index)
+	http.HandleFunc("/add", controllers.Add)
+	http.HandleFunc("/insert", controllers.Insert)
 }

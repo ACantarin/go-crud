@@ -5,11 +5,9 @@ import (
 )
 
 type Product struct {
-	Id          int
-	Name        string
-	Description string
-	Price       float64
-	Quantity    int
+	Id, Quantity      int
+	Name, Description string
+	Price             float64
 }
 
 func GetAll() []Product {
@@ -49,4 +47,16 @@ func GetAll() []Product {
 
 	defer db.Close()
 	return products
+}
+
+func Insert(name, description string, price float64, quantity int) {
+	db := database.Connect()
+
+	dbInsert, err := db.Prepare("INSERT INTO products(name, description, price, quantity) VALUES($1, $2, $3, $4)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	dbInsert.Exec(name, description, price, quantity)
+	defer db.Close()
 }

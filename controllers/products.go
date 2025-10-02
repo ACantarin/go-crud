@@ -3,6 +3,7 @@ package controllers
 import (
 	"go-crud/models/products"
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -24,4 +25,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	*/
 	templates.ExecuteTemplate(w, "index.html", products)
 
+}
+
+func Add(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "add.html", nil)
+}
+
+func Insert(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		name := r.FormValue("name")
+		description := r.FormValue("description")
+		price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+		quantity, _ := strconv.Atoi(r.FormValue("quantity"))
+
+		products.Insert(name, description, price, quantity)
+		http.Redirect(w, r, "/", 301)
+	}
 }
