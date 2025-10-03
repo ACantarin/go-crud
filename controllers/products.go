@@ -7,6 +7,8 @@ import (
 	"text/template"
 )
 
+const defaultRedirectCode = 301
+
 /*
 Carrega todos os templates que estão no diretório "templates" e que tenham a extensão ".html"
 */
@@ -39,12 +41,12 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 		quantity, _ := strconv.Atoi(r.FormValue("quantity"))
 
 		products.Insert(name, description, price, quantity)
-		http.Redirect(w, r, "/", 301)
+		http.Redirect(w, r, "/", defaultRedirectCode)
 	}
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	products.Delete(id)
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", defaultRedirectCode)
 }
