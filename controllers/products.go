@@ -23,12 +23,12 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	/*
 		Executa o template "index.html" passando os dados de produtos como parâmetro ou "nil" se o template não executa nenhuma ação
 	*/
-	templates.ExecuteTemplate(w, "index.html", products)
+	templates.ExecuteTemplate(w, "Index", products)
 
 }
 
 func Add(w http.ResponseWriter, r *http.Request) {
-	templates.ExecuteTemplate(w, "add.html", nil)
+	templates.ExecuteTemplate(w, "Add", nil)
 }
 
 func Insert(w http.ResponseWriter, r *http.Request) {
