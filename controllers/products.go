@@ -50,3 +50,22 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	products.Delete(id)
 	http.Redirect(w, r, "/", defaultRedirectCode)
 }
+
+func Edit(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	product := products.GetById(id)
+	templates.ExecuteTemplate(w, "Edit", product)
+}
+
+func Update(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		id := r.FormValue("id")
+		name := r.FormValue("name")
+		description := r.FormValue("description")
+		price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+		quantity, _ := strconv.Atoi(r.FormValue("quantity"))
+
+		products.Update(id, name, description, price, quantity)
+		http.Redirect(w, r, "/", defaultRedirectCode)
+	}
+}

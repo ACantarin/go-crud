@@ -50,6 +50,36 @@ func GetAll() []Product {
 	return products
 }
 
+func GetById(id string) Product {
+	db := database.Connect()
+
+	rows, err := db.Query("SELECT * FROM products WHERE id=$1", id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	product := Product{}
+	for rows.Next() {
+		var id, quantity int
+		var name, description string
+		var price float64
+
+		err = rows.Scan(&id, &name, &description, &price, &quantity)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		product.Id = id
+		product.Name = name
+		product.Description = description
+		product.Price = price
+		product.Quantity = quantity
+	}
+
+	defer db.Close()
+	return product
+}
+
 func Insert(name, description string, price float64, quantity int) {
 	db := database.Connect()
 
@@ -71,5 +101,17 @@ func Delete(id string) {
 	}
 
 	dbDelete.Exec(id)
+	defer db.Close()
+}
+
+func Update(id string, name, description string, price float64, quantity int) {
+	db := database.Connect()
+
+	dbUpdate, err := db.Prepare("UPDATE products SET name=$1, description=$2, price=$3, quantity=$4 WHERE id=$5")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	dbUpdate.Exec(name, description, price, quantity, id)
 	defer db.Close()
 }
